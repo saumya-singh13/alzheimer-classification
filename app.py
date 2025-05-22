@@ -79,9 +79,10 @@ def predict():
         return jsonify({"error": "Invalid file format"})
 
     # Save & preprocess image
-    if not os.path.exists("uploads"):
-        os.makedirs("uploads")
-    file_path = os.path.join("uploads", file.filename)
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)
+    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_path)
     image = preprocess_image(file_path)
     prediction = model.predict(image)
